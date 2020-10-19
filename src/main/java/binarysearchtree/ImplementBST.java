@@ -22,13 +22,28 @@ public class ImplementBST<K extends Comparable<K>> {
 		return current;
 	}
 	
-	public int size() {
-		return this.getHeight(root);
+	public int size(BinaryNode<K> root) {
+		return (root == null) ? 0 : 1 + size(root.left) + size(root.right);
 	}
 
-	private int getHeight(BinaryNode<K> root) {
-		if(root==null)
-			return 0;
-		return Math.max(1+getHeight(root.left), 1+getHeight(root.right));
+	public int getHeight(BinaryNode<K> root) {
+		return (root == null) ? 0 : 1+Math.max(getHeight(root.left),getHeight(root.right));
+	}
+	
+	public BinaryNode<K> getRoot() {
+		return root;
+	}
+
+	public void setRoot(BinaryNode<K> root) {
+		this.root = root;
+	}
+	
+	public BinaryNode<K> searchElement(BinaryNode<K> root, K search)
+	{
+		if(root==null || root.key==search)
+			return root;
+		else if(root.key.compareTo(search)<0)
+			return searchElement(root.left,search);
+		return searchElement(root.right,search);	
 	}
 }
